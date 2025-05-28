@@ -8,8 +8,8 @@ import google.generativeai as genai
 genai.configure(api_key="AIzaSyDexffYjmTQRUfLPtfkd65yrCXRgYr0S9c")
 
 # Load dataset and embeddings
-df = pd.read_csv(r"D:/karthik/Asvix Internship/Medibot-AI-main/Files/Pratheek/Updated Data/combined_output.csv")
-embeddings = pd.read_csv(r"D:/karthik/Asvix Internship/Medibot-AI-main/Files/Pratheek/Updated Data/symptom_embeddings.csv").values.astype(np.float32)  # Load CSV as numpy array
+df = pd.read_csv("combined_output.csv")
+embeddings = pd.read_csv("symptom_embeddings.csv").values.astype(np.float32)  # Load CSV as numpy array
 
 # Load embedding model (for query only)
 embedder = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
