@@ -8,8 +8,8 @@ import google.generativeai as genai
 genai.configure(api_key="AIzaSyDexffYjmTQRUfLPtfkd65yrCXRgYr0S9c")
 
 # Load dataset and embeddings
-df = pd.read_csv("combined_output.csv")
-embeddings = pd.read_csv("symptom_embeddings.csv").values.astype(np.float32)  # Load CSV as numpy array
+df = pd.read_csv(r"D:/karthik/Asvix Internship/Medibot-AI-main/Files/Pratheek/Updated Data/combined_output.csv")
+embeddings = pd.read_csv(r"D:/karthik/Asvix Internship/Medibot-AI-main/Files/Pratheek/Updated Data/symptom_embeddings.csv").values.astype(np.float32)  # Load CSV as numpy array
 
 # Load embedding model (for query only)
 embedder = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
@@ -29,29 +29,16 @@ if user_input:
 
     # Get matched record
     row = df.iloc[top_idx]
-    top_index = cos_scores.argmax()
-    matched = df.iloc[top_index]
-    rag_context = f"""
-Disease: {matched['disease']}
-Symptoms: {matched['common_symptom']}
-Severity (1–5): {matched['severity']}
-Description: {matched['Description']}
-"""
     prompt = f"""
-You are a medical assistant. Use the following context to answer a patient's query.
+    You are a helpful medical assistant. Based on the following symptom: "{user_input}",
+    provide a detailed medical diagnosis based on the match:
 
-Context:
-{rag_context}
+    Disease: {row['disease']}
+    Severity: {row['severity']}
+    Description: {row['Description']}
 
-The patient reports: {user_input}
-
-Based on this, answer the following:
-1. What is the most likely disease?
-2. How severe is it?
-3. Give a brief description.
-4. What are the recommended treatments and precautions?
-5. What advice would you give the patient?
-"""
+    Format your response clearly and informatively.
+    """
 
     # Query Gemini
     model = genai.GenerativeModel("gemini-1.5-flash")
