@@ -30,15 +30,20 @@ if user_input:
     # Get matched record
     row = df.iloc[top_idx]
     prompt = f"""
-    You are a helpful medical assistant. Based on the following symptom: "{user_input}",
-    provide a detailed medical diagnosis based on the match:
+You are a medical assistant. Use the following context to answer a patient's query.
 
-    Disease: {row['disease']}
-    Severity: {row['severity']}
-    Description: {row['Description']}
+Context:
+{rag_context}
 
-    Format your response clearly and informatively.
-    """
+The patient reports: {user_input}
+
+Based on this, answer the following:
+1. What is the most likely disease?
+2. How severe is it?
+3. Give a brief description.
+4. What are the recommended treatments and precautions?
+5. What advice would you give the patient?
+"""
 
     # Query Gemini
     model = genai.GenerativeModel("gemini-1.5-flash")
