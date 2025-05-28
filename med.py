@@ -29,7 +29,7 @@ if user_input:
 
     # Get matched record
     row = df.iloc[top_idx]
-    top_index = similarities.argmax()
+    top_index = cos_scores.argmax()
     matched = df.iloc[top_index]
     rag_context = f"""
 Disease: {matched['disease']}
