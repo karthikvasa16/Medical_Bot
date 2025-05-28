@@ -29,6 +29,12 @@ if user_input:
 
     # Get matched record
     row = df.iloc[top_idx]
+    rag_context = f"""
+Disease: {matched['disease']}
+Symptoms: {matched['common_symptom']}
+Severity (1–5): {matched['severity']}
+Description: {matched['Description']}
+"""
     prompt = f"""
 You are a medical assistant. Use the following context to answer a patient's query.
 
