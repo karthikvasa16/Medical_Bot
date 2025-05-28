@@ -29,6 +29,8 @@ if user_input:
 
     # Get matched record
     row = df.iloc[top_idx]
+    top_index = similarities.argmax()
+    matched = df.iloc[top_index]
     rag_context = f"""
 Disease: {matched['disease']}
 Symptoms: {matched['common_symptom']}
